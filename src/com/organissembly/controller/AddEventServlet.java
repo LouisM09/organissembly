@@ -18,7 +18,7 @@ import com.organissembly.bean.Event;
 import com.organissembly.bean.Organization;
 import com.organissembly.dao.EventDao;
 import com.organissembly.dao.OrgDao;
-@MultipartConfig(maxFileSize = 16177215)
+
 public class AddEventServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,6 @@ public class AddEventServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
 		
 		HttpSession session=request.getSession();
 		String userRole = null;
@@ -46,8 +45,7 @@ public class AddEventServlet extends HttpServlet {
 		String newEventPostedBy = request.getParameter("eventPostedBy");
 		String newEventTitle = request.getParameter("eventTitle");
 		String newEventDetails = request.getParameter("eventBody");
-		String newEventActualDate = request.getParameter("eventActualDate");
-		String newEventActualTime = request.getParameter("eventActualTime");
+		
 		List<String> getOrgName = dao.getEventOrgName(newEventOrgId);
 		String newEventOrgName = getOrgName.get(0);
 
@@ -57,20 +55,7 @@ public class AddEventServlet extends HttpServlet {
 		bean.setEventTitle(newEventTitle);
 		bean.setEventDescription(newEventDetails);
 		bean.setEventOrgName(newEventOrgName);
-		bean.setEventActualDate(newEventActualDate);
-		bean.setEventActualTime(newEventActualTime);
-		InputStream inputStream = null;
-        Part filePart = request.getPart("merchImage");
-        if (filePart != null) {             
-            // obtains input stream of the upload file
-            inputStream = filePart.getInputStream();
-        }
-		
-		
-		
-		bean.setEventImage(inputStream);
-		
-	
+
 		int status = dao.save(bean);
 		
 		List<Event> eventList = new ArrayList<Event>();

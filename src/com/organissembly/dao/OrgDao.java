@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-import com.organissembly.bean.Event;
-import com.organissembly.bean.Member;
+
 import com.organissembly.bean.Organization;
 import com.organissembly.bean.User;
 public class OrgDao {
@@ -87,6 +86,26 @@ public class OrgDao {
 		return status;
 	}
 	
+	public static int updateDetails(Organization u){
+		int status=0;
+		try{
+			Connection con=getConnection();
+			PreparedStatement ps=con.prepareStatement("update organization set org_name=?,org_about=?,org_vision=?,org_mission=?,org_calendarImage=? where org_id=?");
+			InputStream inputStream = null;
+			inputStream = u.getOrgImage();
+			ps.setString(1,u.getOrgName());
+			ps.setString(2,u.getOrgAbout());
+			ps.setString(3,u.getOrgVision());
+			ps.setString(4,u.getOrgMission());
+			ps.setBinaryStream(5, inputStream, inputStream.available());
+			ps.setString(6,u.getOrgId());
+			status=ps.executeUpdate();
+		}catch(Exception e){System.out.println(e);}
+		return status;
+	}
+	
+	
+	
 	public static int updateUserLevel(String userId, String userLevel){
 		int status=0;
 		try{
@@ -155,7 +174,7 @@ public class OrgDao {
 		List<Organization> list=new ArrayList<Organization>();
 		try{
 			Connection con=getConnection();
-			PreparedStatement ps=con.prepareStatement("select * from organization where org_Id=?");
+			PreparedStatement ps=con.prepareStatement("select * from organization where org_id=?");
 			ps.setString(1, a);
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()){

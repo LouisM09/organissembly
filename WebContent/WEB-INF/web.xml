@@ -224,4 +224,20 @@
     <servlet-name>s28</servlet-name>
     <url-pattern>/reject_member</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>s29</servlet-name>
+    <servlet-class>com.organissembly.controller.userOrg</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>s29</servlet-name>
+    <url-pattern>/userOrg</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>s30</servlet-name>
+    <servlet-class>com.organissembly.controller.UpdateUserOrgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>s30</servlet-name>
+    <url-pattern>/UpdateUserOrg</url-pattern>
+  </servlet-mapping>
 </web-app>

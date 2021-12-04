@@ -17,10 +17,13 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-        request.getRequestDispatcher("index.jsp").include(request, response);  
+        
         
         HttpSession session=request.getSession();  
-        session.invalidate();
+     
+            session.invalidate();
+        
+        request.getRequestDispatcher("index.jsp").include(request, response);  
 	}
 
 	/**

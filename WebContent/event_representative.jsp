@@ -8,7 +8,9 @@
     <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/libs/css/style.css">
     <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-    <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css"> 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
@@ -303,6 +305,61 @@ body {
   padding: 20px;
   color: white;
 }
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add an active class to highlight the current page */
+.topnav a.active {
+  background-color: #fecc36;
+  color: white;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+  display: none;
+}
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -389,7 +446,7 @@ body {
 </div>
 
 <div id="id05" class="modal">
-  <form class="modal-content animate" action="${pageContext.request.contextPath}/add_event" method="post" enctype="multipart/form-data">
+  <form class="modal-content animate" action="${pageContext.request.contextPath}/add_event" method="post" >
     <div class="imgcontainer">
       <span onclick="document.getElementById('id05').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="Logo_of_the_UST_Growling_Tigers.svg" alt="leftImage" class="leftImage">
@@ -415,12 +472,7 @@ body {
 	   <br><br><label for="editActualDate"><b>Event Time: </b></label>
 	 <input type="text" name="editActualDate" id="editActualTime" required>
 	  
-	   <label for="eventImage"><b>Event Image</b></label>
-      <input type="file" name="eventImage" id="eventImage" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
-	  <div class="imgcontainer">
-		<img id="output" name="output" src="#" alt="Merch Image coming soon" class="leftImage" width="280px" height="280px">
-      </div>
-	  
+	 
 	  
 	  
       <input type="hidden" name="dateCreated" id="dateC"/>
@@ -431,7 +483,7 @@ body {
 </div>
 
 <div id="id06" class="modal">
-  <form class="modal-content animate" action="${pageContext.request.contextPath}/update_event" method="post" enctype="multipart/form-data">
+  <form class="modal-content animate" action="${pageContext.request.contextPath}/update_event" method="post" >
     <div class="imgcontainer">
       <span onclick="document.getElementById('id06').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="Logo_of_the_UST_Growling_Tigers.svg" alt="leftImage" class="leftImage">
@@ -457,19 +509,7 @@ body {
 		<option value="Done">Done</option>
 	  </select>
 	  
-	  <br><br><label for="editActualDate"><b>Event Date: </b></label>
-	 <input type="text" name="editActualDate" id="editActualDate" required>
-	  
-	   <br><br><label for="editActualDate"><b>Event Time: </b></label>
-	 <input type="text" name="editActualDate" id="editActualTime" required>
-	  
-	   <label for="editImage"><b>Event Image</b></label>
-      <input type="file" name="editImage" id="editImage" onchange="document.getElementById('outputEdit').src = window.URL.createObjectURL(this.files[0])">
-	  <div class="imgcontainer">
-		<img id="outputEdit" name="outputEdit" src="" alt="Event Image coming soon" class="leftImage" width="280px" height="280px">
-      </div>
-	  
-	  
+	 
 	  
 	  <input type="hidden" name="eventId" id="eventId"/>
 	  <input type="hidden" name="editIsApproved" id="editIsApproved"/>
@@ -517,9 +557,10 @@ body {
   </div>
 </div>
 
-<div class="navbar">
+<div class="topnav" id="myTopnav">
   <a href="${pageContext.request.contextPath}/home">Home</a>
-  <a href="${pageContext.request.contextPath}/org">Organizations</a>
+<a href="${pageContext.request.contextPath}/userOrg">Organization</a>
+  <a href="${pageContext.request.contextPath}/org" >Apply</a>
   <a href="${pageContext.request.contextPath}/members">Members</a>
   <a href="${pageContext.request.contextPath}/events" class="active">Events</a>
   <a href="${pageContext.request.contextPath}/participants">Participants</a>
@@ -527,6 +568,9 @@ body {
   <a href="${pageContext.request.contextPath}/merch">Merch</a>
   <a href="#" class="right" onclick="document.getElementById('id02').style.display='block'">Logout</a>
   <a href="#" class="right" onclick="document.getElementById('id03').style.display='block'">Account Settings</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+    </a>
 </div>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -548,9 +592,6 @@ list = (List<Event>) session.getAttribute("list");
 											document.getElementById('editPostedBy').value='${u.getEventPostedById()}';
 											document.getElementById('editTitle').value='${u.getEventTitle()}';
 											document.getElementById('editBody').value='${u.getEventDescription()}';
-													document.getElementById('editDate').value='${u.getEventActualDate()}';
-											document.getElementById('editTime').value='${u.getEventActualTime()}';
-											document.getElementById('outputEdit').src='data:image/jpg;base64,${u.getBase64Image()}';
 											document.getElementById('id06').style.display='block'" style="border-top-left-radius:50px;border-top-right-radius: 50px">Edit Event</button>
 	</div>
 	<div class="centeredDiv" style="background:black;border:2px;border-color:white;border-bottom-left-radius:50px;border-bottom-right-radius: 50px;border-top-right-radius: 50px">
@@ -571,22 +612,6 @@ list = (List<Event>) session.getAttribute("list");
 
 			<div class="centeredDiv" style="background:#F3B701;border-bottom-left-radius:50px;border-bottom-right-radius:50px;">
 		  		<h2 style="color:black">Enabled Status: ${u.getEventIsEnabled()}</h2>
-			</div>
-			
-			<div class="centeredDiv" style="background:#F3B701;border-bottom-left-radius:50px;border-bottom-right-radius:50px;">
-		  		<h2 style="color:black">Enabled Status: ${u.getEventActualDate()}</h2>
-			</div>
-			
-			
-			<div class="centeredDiv" style="background:#F3B701;border-bottom-left-radius:50px;border-bottom-right-radius:50px;">
-		  		<h2 style="color:black">Enabled Status: ${u.getEventActualTime()}</h2>
-			</div>
-			
-			
-			<div class="centeredDiv" style="background:#FEC825">
-				<div class="imgcontainer">
-					<img src="data:image/jpg;base64,${u.getBase64Image()}" class="leftImage" alt="Merch Image coming soon" width="280px" height="280px">
-      			</div>
 			</div>
 			
 		</div>
@@ -638,6 +663,14 @@ function showPassword() {
 	    x.type = "password";
 	}
 }
+function myFunction() {
+	  var x = document.getElementById("myTopnav");
+	  if (x.className === "topnav") {
+	    x.className += " responsive";
+	  } else {
+	    x.className = "topnav";
+	  }
+	}
 
 function setValues() {
 	alert("Action has been processed");

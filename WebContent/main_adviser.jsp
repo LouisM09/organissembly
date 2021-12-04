@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="assets/libs/css/style.css">
     <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
     <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
@@ -258,6 +261,61 @@ body {
     width: 100%;
   }
 }
+
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add an active class to highlight the current page */
+.topnav a.active {
+  background-color: #fecc36;
+  color: white;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+  display: none;
+}
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
 </style>
 </head>
 <body>
@@ -278,7 +336,7 @@ body {
     </div>
   </form>
 </div>
-
+	<!-- account modal -->
 <div id="id03" class="modal">
   <form class="modal-content animate" action="${pageContext.request.contextPath}/account" method="post">
     <div class="imgcontainer">
@@ -316,183 +374,10 @@ body {
     </div>
   </form>
 </div>
-
-<%@ page import="java.sql.*" %>
-<%ResultSet rs =null;%>
-<div id="id05" class="modal">
-  <form class="modal-content animate" action="${pageContext.request.contextPath}/update_org" method="post" enctype="multipart/form-data">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id05').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="Logo_of_the_UST_Growling_Tigers.svg" alt="leftImage" class="leftImage">
-    </div>
-
-    <div class="container">
-      <label for="editOrgName"><b>Organization Name</b></label>
-      <input type="text" placeholder="Enter Organization Name" name="editOrgName" id="editOrgName" required>
-
-      <label for="editOrgAbout"><b>About Organization</b></label>
-      <textarea rows=4 cols=40 placeholder="Enter About Organization" name="editOrgAbout" id="editOrgAbout" required></textarea>
-      
-      <label for="editOrgVision"><b>Organization Vision</b></label>
-      <textarea rows=4 cols=40 placeholder="Enter Organization Vision" name="editOrgVision" id="editOrgVision" required></textarea>
-      
-      <label for="editOrgMission"><b>Organization Mission</b></label>
-      <textarea rows=4 cols=40 placeholder="Enter Organization Mission" name="editOrgMission" id="editOrgMission" required></textarea>
-      
-		<%
-    	try{
-			//Class.forName("com.mysql.jdbc.Driver").newInstance();
-			Connection connection = 
-         	DriverManager.getConnection
-            //("jdbc:mysql://localhost/organiss_dev?user=root&password=zephyrus12");
-         	//("jdbc:mysql://localhost/delwio67_prod?user=delwio67_root&password=zephyrus12#");
-         	//("jdbc:mysql://localhost/omgvna2s_prod?user=omgvna2s_root&password=zephyrus12#");
-       //	("jdbc:mysql://localhost/organiss_dev?user=organiss_root&password=zephyrus12#");
-		("jdbc:mysql://localhost/capstone_dev?user=capstone_root&password=zephyrus12#");
-       		Statement statement = connection.createStatement() ;
-
-       		rs = statement.executeQuery("select * from user where user_year='Faculty'") ;
-		%>
-      <label for="editOrgAdviser"><b>Organization Adviser</b></label>
-      <select name="editOrgAdviser" id="editOrgAdviser" style="width:200px" disabled>
-      <option value=""></option>
-		<%  while(rs.next()){ %>
-            <option value="<%= rs.getString(2)%>"><%= rs.getString(5) +" "+ rs.getString(6) +" "+ rs.getString(7) %></option>
-        <% } %>
-        <%
-			//**Should I input the codes here?**
-        	}
-        	catch(Exception e)
-        	{
-             	out.println("wrong entry"+e);
-        	}
-		%>
-      </select>
-      
-      <%
-    	try{
-		//Class.forName("com.mysql.jdbc.Driver").newInstance();
-		Connection connection = 
-			DriverManager.getConnection
-           // ("jdbc:mysql://localhost/organiss_dev?user=root&password=zephyrus12");
-			//("jdbc:mysql://localhost/delwio67_prod?user=delwio67_root&password=zephyrus12#");
-			//("jdbc:mysql://localhost/omgvna2s_prod?user=omgvna2s_root&password=zephyrus12#");
-	//	("jdbc:mysql://localhost/organiss_dev?user=organiss_root&password=zephyrus12#");
-		("jdbc:mysql://localhost/capstone_dev?user=capstone_root&password=zephyrus12#");
-		Statement statement = connection.createStatement() ;
-
-		rs = statement.executeQuery("select * from user where user_year<>'Faculty'") ;
-	  %>
-      <br><br><label for="editOrgPresident"><b>Organization President</b></label>
-      <br><select name="editOrgPresident" id="editOrgPresident" style="width:200px">
-      <option value=""></option>
-		<%  while(rs.next()){ %>
-            <option value="<%= rs.getString(2)%>"><%= rs.getString(5) +" "+ rs.getString(6) +" "+ rs.getString(7) %></option>
-        <% } %>
-        <%
-			//**Should I input the codes here?**
-        	}
-        	catch(Exception e)
-        	{
-             	out.println("wrong entry"+e);
-        	}
-		%>
-      </select>
-      
-      <%
-    	try{
-		//Class.forName("com.mysql.jdbc.Driver").newInstance();
-		Connection connection = 
-			DriverManager.getConnection
-            //("jdbc:mysql://localhost/organiss_dev?user=root&password=zephyrus12");
-			//("jdbc:mysql://localhost/delwio67_prod?user=delwio67_root&password=zephyrus12#");
-			//("jdbc:mysql://localhost/omgvna2s_prod?user=omgvna2s_root&password=zephyrus12#");
-			//	("jdbc:mysql://localhost/organiss_dev?user=organiss_root&password=zephyrus12#");
-		("jdbc:mysql://localhost/capstone_dev?user=capstone_root&password=zephyrus12#");
-		Statement statement = connection.createStatement() ;
-
-		rs = statement.executeQuery("select * from user where user_year<>'Faculty'") ;
-	  %>
-	  <br><br><label for="editOrgSecretary"><b>Organization Secretary</b></label>
-      <br><select name="editOrgSecretary" id="editOrgSecretary" style="width:200px">
-      <option value=""></option>
-		<%  while(rs.next()){ %>
-            <option value="<%= rs.getString(2)%>"><%= rs.getString(5) +" "+ rs.getString(6) +" "+ rs.getString(7) %></option>
-        <% } %>
-        <%
-			//**Should I input the codes here?**
-        	}
-        	catch(Exception e)
-        	{
-             	out.println("wrong entry"+e);
-        	}
-		%>
-      </select>
-      
-      <%
-    	try{
-		//Class.forName("com.mysql.jdbc.Driver").newInstance();
-		Connection connection = 
-			DriverManager.getConnection
-            //("jdbc:mysql://localhost/organiss_dev?user=root&password=zephyrus12");
-			//("jdbc:mysql://localhost/delwio67_prod?user=delwio67_root&password=zephyrus12#");
-			//("jdbc:mysql://localhost/omgvna2s_prod?user=omgvna2s_root&password=zephyrus12#");
-		//	("jdbc:mysql://localhost/organiss_dev?user=organiss_root&password=zephyrus12#");
-		("jdbc:mysql://localhost/capstone_dev?user=capstone_root&password=zephyrus12#");
-		Statement statement = connection.createStatement() ;
-
-		rs = statement.executeQuery("select * from user where user_year<>'Faculty'") ;
-	  %>
-	  <br><br><label for="editOrgPro"><b>Organization P.R.O</b></label>
-      <br><select name="editOrgPro" id="editOrgPro" style="width:200px">
-      <option value=""></option>
-		<%  while(rs.next()){ %>
-            <option value="<%= rs.getString(2)%>"><%= rs.getString(5) +" "+ rs.getString(6) +" "+ rs.getString(7) %></option>
-        <% } %>
-        <%
-			//**Should I input the codes here?**
-        	}
-        	catch(Exception e)
-        	{
-             	out.println("wrong entry"+e);
-        	}
-		%>
-      </select>
-      
-      <br><label for="editIsEnabled"><b>Is Enabled Status: </b></label>
-      <br><select name="editIsEnabled" id="editIsEnabled" style="width:100px" required>
-		<option value="Yes">Yes</option>
-		<option value="No">No</option>
-	  </select>
-      
-      <br><label for="editOrgImage"><b>Organization Calendar</b></label>
-      <input type="file" name="editOrgImage" id="editOrgImage" onchange="document.getElementById('outputEdit').src = window.URL.createObjectURL(this.files[0])">
-	  <div class="imgcontainer">
-		<img id="outputEdit" name="outputEdit" src="#" alt="Organization Calendar coming soon" class="leftImage" width="280px" height="280px">
-      </div>
-        
-      <input type="hidden" name="orgId" id="orgId"/>
-      <input type="hidden" name="oldOrgAdviser" id="oldOrgAdviser"/>
-      <input type="hidden" name="oldOrgPresident" id="oldOrgPresident"/>
-      <input type="hidden" name="oldOrgSecretary" id="oldOrgSecretary"/>
-      <input type="hidden" name="oldOrgPro" id="oldOrgPro"/>
-      <button type="submit">Update Organization</button>
-      <button type="button" onclick="document.getElementById('id05').style.display='none'" class="cancelbtn">Cancel</button>
-    </div>
-  </form>
-</div>
-
-<%  while(rs.next()){ %>
-	<% } %>
-        <%
-			//**Should I input the codes here?**
-        	}
-        	catch(Exception e)
-        	{
-             	out.println("wrong entry"+e);
-        	}
-		%>
-
+	
+	
+	
+	
 
 <div class="header">
   <h1>Organissembly</h1>
@@ -526,13 +411,15 @@ body {
     	}
     	
     }
+    
     %>
   </div>
 </div>
 
-<div class="navbar">
+<div class="topnav" id="myTopnav">
   <a href="${pageContext.request.contextPath}/home" class="active">Home</a>
-  <a href="${pageContext.request.contextPath}/org">Organizations</a>
+  <a href="${pageContext.request.contextPath}/userOrg">Organization</a>
+  <a href="${pageContext.request.contextPath}/org" >Apply</a>
   <a href="${pageContext.request.contextPath}/applicants">Applicants</a>
   <a href="${pageContext.request.contextPath}/members">Members</a>
   <a href="${pageContext.request.contextPath}/events">Events</a>
@@ -540,99 +427,168 @@ body {
   <a href="${pageContext.request.contextPath}/merch">Merch</a>
   <a href="#" class="right" onclick="document.getElementById('id02').style.display='block'">Logout</a>
   <a href="#" class="right" onclick="document.getElementById('id03').style.display='block'">Account Settings</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+    </a>
 </div>
 
+<div class="dashboard-main-wrapper">
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="com.organissembly.dao.OrgDao,com.organissembly.bean.*,java.util.*"%>
+        <div class="dashboard-wrapper">
+            <div class="container-fluid dashboard-content">
+                <div class="row">
+                    <div class="col-xl-10">
+                   
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="page-section" id="overview">
+                                    <div class="row">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <h2>Organissembly</h2>
+                                            <p class="lead">Student organizations give you the opportunity to broaden your horizons, learning new skills and meeting people who can further your success as you transition from college to the real world.</p>
+                                            <ul class="list-unstyled arrow">
+                                                <li>Apply on different organizations online!</li>
+                                                <li>Browse merchandise being offered from different organizations</li>
+                                                <li>Enlist on the different events being offered by a variety of organizations</li>
+                                                <li>Be informed of the announcements made by organizations</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="section-block" id="cards">
+                                    <h3 class="section-title">Why join Orgs?</h3>
+                                    <p>Involvement in student organizations has a strong association with psychosocial development, particularly on students establishing and clarifying purpose, educational involvement, career planning, life management, and cultural participations. Plus, its fun!</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Apply Now</h3>
+                                        <p class="card-text">Applying is as simple as pressing a few buttons! no extra steps needed!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Explore!</h3>
+                                        <p class="card-text">Explore the content of different organizations on the website</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title border-bottom pb-2">Partners!</h3>
+                                        <p class="card-text">We've associated ourselves  with special people on different departments!</p>
+                                        <p class="card-text">Student Council</p>
+                                        <p class="card-text">IT Department</p>
+                                        <p class="card-text">IS Department</p>
+                                        <p class="card-text">CS Department</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3>Benefits!</h3>
+                                        <p>This version of the website is still only on its initial stages, as more users use this website we'll keep on improving and expanding it!</p>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                   
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="section-block" id="image-card">
+                                    <h3 class="section-title">Throwback!</h3>
+                                    <p>Let's take a look back! here's some of the fun activities/events that many of our orgs have hosted for the past years!</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <img class="card-img-top img-fluid" src="assets/images/iicsev1.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Recognition award</h3>
+                                        <p class="card-text">IICS tweets on twitter! students are awarded with different awards throughout the IICS week!.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <img class="card-img-top img-fluid p-2" src="assets/images/iicsev2.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Career Fairs</h3>
+                                        <p class="card-text">Different organizations host career fairs during IICS week!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title mb-2">Welcome Freshies</h3>
+                                        <h6 class="card-subtitle text-muted"></h6>
+                                    </div>
+                                    <img class="img-fluid" src="assets/images/iicsev3.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <p class="card-text">Every year, different organizations help one another to welcome our new freshies!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Bulletin Boards </h3>
+                                        <img class="img-fluid mb-4" src="assets/images/iicsev4.jpg" alt="Card image cap">
+                                        <p class="card-text">We strive to serve you the best announcements every week! our bulletin board scattered throughout the building gives info on events</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <img class="img-fluid" src="assets/images/iicsev5.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Seminars</h3>
+                                        <p class="card-text">A variety of organizations upheld different types of seminars to help each students</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Online Seminars</h3>
+                                        <p class="card-text">Different organizations even support online seminars to improve the lives of all students!</p>
+                                    </div>
+                                    <img src="assets/images/iicsev7.jpg">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="card text-white">
+                                    <img class="card-img" src="assets/images/iicsev6.jpg" alt="Card image">
+                                    <div class="card-img-overlay">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        
 
+                    </div>
+                   
+                </div>
+            </div>
 
-<%
-List<Organization> list = new ArrayList<Organization>();
- list = (List<Organization>) session.getAttribute("orgInfo");
-
-%>
-
-
-<div style="width:flex;padding: 0px">
-
-<div style="width:flex;border:1;padding:10px;">
-<c:forEach items="${list}" var="u">
-	<div style="width:20%;min-width:300px;align-items:right;background:black;border-top-left-radius:50px;border-top-right-radius: 50px">
-		<button class="normalbtn" onclick="document.getElementById('editOrgName').value='${u.getOrgName()}';
-											document.getElementById('editIsEnabled').value='${u.getIsEnabled()}';
-											document.getElementById('orgId').value='${u.getOrgId()}';
-											document.getElementById('editOrgAbout').value='${u.getOrgAbout()}';
-											document.getElementById('editOrgVision').value='${u.getOrgVision()}';
-											document.getElementById('editOrgMission').value='${u.getOrgMission()}';
-											document.getElementById('editOrgAdviser').value='${u.getOrgAdviserId()}';
-											document.getElementById('editOrgPresident').value='${u.getOrgPresidentId()}';
-											document.getElementById('editOrgSecretary').value='${u.getOrgSecretaryId()}';
-											document.getElementById('editOrgPro').value='${u.getOrgProId()}';
-											document.getElementById('oldOrgAdviser').value='${u.getOrgAdviserId()}';
-											document.getElementById('oldOrgPresident').value='${u.getOrgPresidentId()}';
-											document.getElementById('oldOrgSecretary').value='${u.getOrgSecretaryId()}';
-											document.getElementById('oldOrgPro').value='${u.getOrgProId()}';
-											document.getElementById('outputEdit').src='data:image/jpg;base64,${u.getBase64Image()}';
-											document.getElementById('id05').style.display='block'" style="border-top-left-radius:50px;border-top-right-radius: 50px">Update Organization</button>
-	</div>
-	<div class="centeredDiv" style="background:black;border:2px;border-color:white;border-bottom-left-radius:50px;border-bottom-right-radius: 50px;border-top-right-radius: 50px">
-		<div style="width:flex;align-items:center"><h2 style="color:white;align-self:center;">${u.getOrgName()}</h2></div>
-		<div style="width:flex;">
-			<div class="centeredDiv" style="background:#FED250;border-top-left-radius:50px;border-top-right-radius:50px;">
-  				<h2 style="color:black">About</h2>
-  				<p style="color:black">${u.getOrgAbout()}</p>
-			</div>
-
-			<div class="centeredDiv" style="background:#FEC825">
-  				<h2 style="color:black">Vision</h2>
-  				<p style="color:black">${u.getOrgVision()}</p>
-			</div>
-
-			<div class="centeredDiv" style="background:#F3B701">
-		  		<h2 style="color:black">Mission</h2>
-		  		<p style="color:black">${u.getOrgMission()}</p>
-			</div>
-			
-			<div class="centeredDiv" style="background:#FED250;border-bottom-left-radius:50px;border-bottom-right-radius:50px;">
-				<h2 style="color:black">Calendar</h2>
-				<div class="imgcontainer">
-					<img src="data:image/jpg;base64,${u.getBase64Image()}" class="leftImage" alt="Organization Calendar coming soon" width="704px" height="382px">
-      			</div>
-			</div>
-		</div>
-	</div>
-	<!-- Creates List of Organization Roles -->
-	<div class="centeredDiv" style="background:black;border:2px;border-color:white;border-radius:50px">
-		<div style="width:flex;align-items:center"><h2 style="color:white;align-self:center;">${u.getOrgName()}'s Organizational Structure</h2></div>
-		<div style="width:flex;">
-			<div class="centeredDiv" style="background:#FED250;border-top-left-radius:50px;border-top-right-radius:50px;">
-  				<h2 style="color:black">Adviser</h2>
-  				<p style="color:black">${u.getOrgAdviserName()}</p>
-			</div>
-
-			<div class="centeredDiv" style="background:#FED250;">
-  				<h2 style="color:black">President</h2>
-  				<p style="color:black">${u.getOrgPresidentName()}</p>
-			</div>
-			
-			<div class="centeredDiv" style="background:#FED250;">
-  				<h2 style="color:black">Secretary</h2>
-  				<p style="color:black">${u.getOrgSecretaryName()}</p>
-			</div>
-
-			<div class="centeredDiv" style="background:#FED250;border-bottom-left-radius:50px;border-bottom-right-radius:50px;">
-		  		<h2 style="color:black">Press Relations Officer</h2>
-		  		<p style="color:black">${u.getOrgProName()}</p>
-			</div>
-		</div>
-	</div>
-</c:forEach>
-</div>
-</div>	
-		
-
-
+           
+        </div>
+    </div>
+    
 
 
 
@@ -661,7 +617,14 @@ window.onclick = function(event) {
     	//  Nothing to do
     }
 }
-
+function myFunction() {
+	  var x = document.getElementById("myTopnav");
+	  if (x.className === "topnav") {
+	    x.className += " responsive";
+	  } else {
+	    x.className = "topnav";
+	  }
+	}
 function showPassword() {
 	var x = document.getElementById("password");
 	if (x.type === "password") {

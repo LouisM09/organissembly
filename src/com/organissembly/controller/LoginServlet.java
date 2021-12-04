@@ -1,6 +1,7 @@
 package com.organissembly.controller;
 
 import java.io.IOException;
+
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,10 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.organissembly.bean.Organization;
+
 import com.organissembly.bean.User;
 import com.organissembly.dao.LoginDao;
-import com.organissembly.dao.MemberDao;
 import com.organissembly.dao.OrgDao;
 import com.organissembly.dao.passEncrypt;
 
@@ -25,7 +25,8 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		try {
+		
+		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
@@ -52,10 +53,10 @@ public class LoginServlet extends HttpServlet {
 			String dateCreated = dao.getDateCreated(bean);
 			String dateUpdated = dao.getDateUpdated(bean);
 			String points = dao.getPoints(bean);
-			List<String> affiliateOrgs = OrgDao.getAffiliateOrgs(userId);
+			List<String> affiliateOrgs = orgDao.getAffiliateOrgs(userId);
 			
-		String orgId =	MemberDao.getOrgIdByUserId(userId);
-			List<Organization> orgInfo = OrgDao.getSpecificOrganization(orgId);
+	
+			
 			
 	
 			HttpSession session=request.getSession();
@@ -71,7 +72,6 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("fullName",firstName+" "+middleName+" "+lastName);
 			session.setAttribute("points",points);
 			session.setAttribute("affiliateOrgs", affiliateOrgs);
-			session.setAttribute("orgInfo", orgInfo);
 			session.removeAttribute("accountUpdateStatus");
 
 			if (userRole.compareTo("Student") == 0) {
@@ -99,10 +99,8 @@ public class LoginServlet extends HttpServlet {
 			RequestDispatcher rd=request.getRequestDispatcher("login-error.jsp");
 			rd.forward(request, response);
 		}
-	}catch(Exception E){
-			RequestDispatcher rd=request.getRequestDispatcher("login-error.jsp");
-			rd.forward(request, response);
-	}
+	
+	
 		
 }//end do get
 

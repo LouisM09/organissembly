@@ -1,31 +1,8 @@
 package com.organissembly.bean;
 
-import java.io.InputStream;
-
 public class Event {
 	private int id;
-	private String eventId,eventOrgId,eventPostedById,eventTitle,eventDescription,eventStatus,eventIsApproved,eventIsEnabled,eventDateCreated,eventOrgName,eventActualDate,eventActualTime,base64Image;
-	private InputStream eventImage;
-	
-	 public String getBase64Image() {
-	        return base64Image;
-	    }
-	    public void setBase64Image(String base64Image) {
-	        this.base64Image = base64Image;
-	    }
-	
-	public String getEventActualDate() {
-		return eventActualDate;
-	}
-	public void setEventActualDate(String eventActualDate) {
-		this.eventActualDate = eventActualDate;
-	}
-	public String getEventActualTime() {
-		return eventActualTime;
-	}
-	public void setEventActualTime(String eventActualTime) {
-		this.eventActualTime = eventActualTime;
-	}
+	private String eventId,eventOrgId,eventPostedById,eventTitle,eventDescription,eventStatus,eventIsApproved,eventIsEnabled,eventDateCreated,eventOrgName;
 	public int getId() {
 		return id;
 	}
@@ -91,12 +68,5 @@ public class Event {
 	}
 	public String getEventOrgName() {
 		return eventOrgName;
-	}
-	
-	public InputStream getEventImage() {
-		return eventImage;
-	}
-	public void setEventImage(InputStream blob) {
-		this.eventImage = blob;
 	}
 }

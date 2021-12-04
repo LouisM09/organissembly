@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.organissembly.bean.Event;
 import com.organissembly.dao.EventDao;
-@MultipartConfig(maxFileSize = 16177215)
+
 public class EventServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

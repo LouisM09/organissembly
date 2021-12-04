@@ -16,7 +16,7 @@ import javax.servlet.http.Part;
 
 import com.organissembly.bean.Event;
 import com.organissembly.dao.EventDao;
-@MultipartConfig(maxFileSize = 16177215)
+
 public class UpdateEventServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,16 +44,7 @@ public class UpdateEventServlet extends HttpServlet {
 		String editEventStatus = request.getParameter("editStatus");
 		String editEventIsApproved = request.getParameter("editIsApproved");
 		String editEventIsEnabled = request.getParameter("editIsEnabled");
-		String editEventActualDate = request.getParameter("eventActualDate");
-		String editEventActualTime = request.getParameter("eventActualTime");
-		InputStream inputStream = null;
-        Part filePart = request.getPart("editImage");
-        if (filePart != null) {             
-            // obtains input stream of the upload file
-            inputStream = filePart.getInputStream();
-        }	
-		
-		
+
 		bean.setEventId(editEventId);
 		bean.setEventPostedById(editEventPostedBy);
 		bean.setEventTitle(editEventTitle);
@@ -61,9 +52,6 @@ public class UpdateEventServlet extends HttpServlet {
 		bean.setEventStatus(editEventStatus);
 		bean.setEventIsApproved(editEventIsApproved);
 		bean.setEventIsEnabled(editEventIsEnabled);
-		bean.setEventActualDate(editEventActualDate);
-		bean.setEventActualTime(editEventActualTime);
-		bean.setEventImage(inputStream);
 
 		int status = dao.update(bean);
 		

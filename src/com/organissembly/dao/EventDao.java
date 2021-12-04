@@ -15,7 +15,7 @@ import javax.servlet.annotation.MultipartConfig;
 
 import com.organissembly.bean.Event;
 
-@MultipartConfig(maxFileSize = 16177215)
+
 public class EventDao {
 	public static Connection getConnection(){
 		Connection con=null;
@@ -49,11 +49,8 @@ public class EventDao {
 	public static int save(Event u){
 		int status=0;
 		try{
-			 
 			Connection con=getConnection();
-			PreparedStatement ps=con.prepareStatement("insert into event(event_id,event_orgId,event_postedById,event_title,event_description,event_status,event_isApproved,event_isEnabled,event_dateCreated,event_orgName,event_ActualDate,event_ActualTime,event_Image) values (?,?,?,?,?,?,?,?,?,?,?,?,?);");
-			InputStream inputStream = null;
-			inputStream = u.getEventImage();
+			PreparedStatement ps=con.prepareStatement("insert into event(event_id,event_orgId,event_postedById,event_title,event_description,event_status,event_isApproved,event_isEnabled,event_dateCreated,event_orgName) values (?,?,?,?,?,?,?,?,?,?);");
 			ps.setString(1,u.getEventId());
 			ps.setString(2,u.getEventOrgId());
 			ps.setString(3,u.getEventPostedById());
@@ -66,20 +63,6 @@ public class EventDao {
 			String dateTime = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH).format(ldt);
 			ps.setString(9,dateTime);
 			ps.setString(10, u.getEventOrgName());
-			
-			
-			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
-		LocalDate datetime1hold = LocalDate.parse(u.getEventActualDate(),fmt);
-			String datetime1 = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH).format(datetime1hold);
-			
-			ps.setString(11, datetime1);
-			
-			DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("HH:mm:ss", Locale.ENGLISH);
-			LocalTime datetime2hold = LocalTime.parse(u.getEventActualTime(),fmt);
-			String datetime2 = DateTimeFormatter.ofPattern("HH:mm:ss", Locale.ENGLISH).format(datetime1hold);
-			ps.setString(12, u.getEventActualTime());
-			ps.setBinaryStream(13, inputStream, inputStream.available());
-			
 			status=ps.executeUpdate();
 		}catch(Exception e){System.out.println(e);}
 		return status;
@@ -89,20 +72,14 @@ public class EventDao {
 		int status=0;
 		try{
 			Connection con=getConnection();
-			PreparedStatement ps=con.prepareStatement("update event set event_postedById=?,event_title=?,event_description=?,event_status=?,event_isApproved=?,event_isEnabled=?,eventActualDate=?,eventActualTime=?,eventImage=? where event_id=?");
-			InputStream inputStream = null;
-			inputStream = u.getEventImage();
+			PreparedStatement ps=con.prepareStatement("update event set event_postedById=?,event_title=?,event_description=?,event_status=?,event_isApproved=?,event_isEnabled=? where event_id=?");
 			ps.setString(1,u.getEventPostedById());
 			ps.setString(2,u.getEventTitle());
 			ps.setString(3,u.getEventDescription());
 			ps.setString(4,u.getEventStatus());
 			ps.setString(5,u.getEventIsApproved());
 			ps.setString(6,u.getEventIsEnabled());
-			
-			ps.setString(7,u.getEventActualDate());
-			ps.setString(8,u.getEventActualTime());
-			ps.setBinaryStream(9, inputStream, inputStream.available());
-			ps.setString(10,u.getEventId());
+			ps.setString(7,u.getEventId());
 			status=ps.executeUpdate();
 		}catch(Exception e){System.out.println(e);}
 		return status;
@@ -141,30 +118,7 @@ public class EventDao {
 					u.setEventIsEnabled(rs.getString("event_isEnabled"));
 					u.setEventDateCreated(rs.getString("event_dateCreated"));
 					u.setEventOrgName(rs.getString("event_orgName"));
-					u.setEventActualDate(rs.getString("eventActualDate"));
-					u.setEventActualTime(rs.getString("eventActualTime"));
-					u.setEventImage(rs.getBinaryStream("event_Image"));
-					
-					  Blob blob = rs.getBlob("event_Image");
-		                if (blob != null) {
-		                    InputStream inputStream = blob.getBinaryStream();
-		                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		                    byte[] buffer = new byte[4096];
-		                    int bytesRead = -1;
-		                     
-		                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-		                        outputStream.write(buffer, 0, bytesRead);                  
-		                    }
-		                    byte[] imageBytes = outputStream.toByteArray();
-		                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-		                    inputStream.close();
-		                    outputStream.close();
-		                    
-		    				u.setBase64Image(base64Image);
-		                } else {
-		                	u.setBase64Image(null);
-		                }
-			list.add(u);
+					list.add(u);
 				}
 			}
 		}catch(Exception e){System.out.println(e);}
@@ -195,31 +149,7 @@ public class EventDao {
 					u.setEventIsEnabled(rs.getString("event_isEnabled"));
 					u.setEventDateCreated(rs.getString("event_dateCreated"));
 					u.setEventOrgName(rs.getString("event_orgName"));
-					u.setEventActualDate(rs.getString("eventActualDate"));
-					u.setEventActualTime(rs.getString("eventActualTime"));
-					u.setEventImage(rs.getBinaryStream("event_Image"));
-					
-					  Blob blob = rs.getBlob("event_Image");
-		                if (blob != null) {
-		                    InputStream inputStream = blob.getBinaryStream();
-		                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		                    byte[] buffer = new byte[4096];
-		                    int bytesRead = -1;
-		                     
-		                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-		                        outputStream.write(buffer, 0, bytesRead);                  
-		                    }
-		                    byte[] imageBytes = outputStream.toByteArray();
-		                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-		                    inputStream.close();
-		                    outputStream.close();
-		                    
-		    				u.setBase64Image(base64Image);
-		                } else {
-		                	u.setBase64Image(null);
-		                }
-		                
-		            list.add(u);
+					list.add(u);
 				}
 			}
 		}catch(Exception e){System.out.println(e);}
@@ -248,30 +178,6 @@ public class EventDao {
 					u.setEventIsEnabled(rs.getString("event_isEnabled"));
 					u.setEventDateCreated(rs.getString("event_dateCreated"));
 					u.setEventOrgName(rs.getString("event_orgName"));
-					u.setEventActualDate(rs.getString("eventActualDate"));
-					u.setEventActualTime(rs.getString("eventActualTime"));
-					u.setEventImage(rs.getBinaryStream("event_Image"));
-					
-					  Blob blob = rs.getBlob("event_Image");
-		                if (blob != null) {
-		                    InputStream inputStream = blob.getBinaryStream();
-		                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		                    byte[] buffer = new byte[4096];
-		                    int bytesRead = -1;
-		                     
-		                    while ((bytesRead = inputStream.read(buffer)) != -1) {
-		                        outputStream.write(buffer, 0, bytesRead);                  
-		                    }
-		                    byte[] imageBytes = outputStream.toByteArray();
-		                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-		                    inputStream.close();
-		                    outputStream.close();
-		                    
-		    				u.setBase64Image(base64Image);
-		                } else {
-		                	u.setBase64Image(null);
-		                }
-					
 					list.add(u);
 				}
 			}

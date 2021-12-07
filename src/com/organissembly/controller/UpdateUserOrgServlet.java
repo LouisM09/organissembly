@@ -55,7 +55,7 @@ response.setContentType("text/html");
 	
 		bean.setOrgImage(inputStream);
 
-		int status = OrgDao.updateDetails(bean);
+		int status = dao.updateDetails(bean);
 		
 	
 

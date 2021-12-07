@@ -532,7 +532,7 @@ body {
 
     <div class="container">
 	  <label><b>Email</b></label>
-	  <input type="text"name="editUserEmail" id="editUserEmail" pattern="^[.a-zA-Z0-9]+@ust+\.edu\.ph$" title="juan.delacruz.iics@ust.edu.ph" required/>
+	  <input type="text"name="editUserEmail" id="editUserEmail" pattern="^[.a-zA-Z0-9]+@ust+\.edu\.ph$" title="juan.delacruz.iics@ust.edu.ph\cics@edu.ph" required/>
 
       
       <label><b>Password</b></label>

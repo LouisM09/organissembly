@@ -25,7 +25,12 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		HttpSession session=request.getSession();
+		HttpSession session=request.getSession(false);
+		if(session!=null) {
+			
+		}else {
+			request.getRequestDispatcher("index.jsp").include(request, response);
+		}
 		String userRole = null;
 		String userId = null;
 		userId = session.getAttribute("userId").toString();

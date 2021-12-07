@@ -28,6 +28,10 @@ public class AcceptMemberServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
+		
+		
+		
+		
 		Member bean = new Member();
 		MemberDao dao = new MemberDao();
 		

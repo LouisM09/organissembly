@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
     <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Error</title>
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -23,16 +23,6 @@ input[type=text], input[type=password] {
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
-}
-
-textarea {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  resize: none;
 }
 
 /* Set a style for all buttons */
@@ -55,15 +45,6 @@ button:hover {
 .cancelbtn {
   width: 100%;
   padding: 10px 18px;
-  background-color: #f44336;
-}
-
-/* Extra styles for the normal button */
-.normalbtn {
-  border-radius: 0px;
-  font-size: 20px;
-  width: 100%;
-  padding: 0px px;
   background-color: #f44336;
 }
 
@@ -279,32 +260,7 @@ body {
     width: 100%;
   }
 }
-<!-- Child layout -->
-<style>
-* {
-  box-sizing: border-box;
-}
 
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* The grid: Three equal columns that floats next to each other */
-.column {
-  float: center;
-  width: 31%;
-  padding: 20px;
-  text-align: center;
-  font-size: 25px;
-  cursor: pointer;
-  color: white;
-}
-
-.containerTab {
-  padding: 20px;
-  color: white;
-}
 .topnav {
   background-color: #333;
   overflow: hidden;
@@ -364,20 +320,6 @@ body {
 <body>
 <!--<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>-->
 
-<%
-	response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");//HTTP1.1
-	
-	response.setHeader("Pragma", "no-cache");//HTTP1.0
-	
-	response.setHeader("Expires", "0");//Proxies
-
-	if(session.getAttribute("userId")==null){
-		response.sendRedirect("index.jsp");
-	}
-%>
-
-
-
 <div id="id01" class="modal">
   <form class="modal-content animate" action="${pageContext.request.contextPath}/login" method="post">
     <div class="imgcontainer">
@@ -421,96 +363,31 @@ body {
   </form>
 </div>
 
-<div id="id03" class="modal">
-  <form class="modal-content animate" action="${pageContext.request.contextPath}/account" method="post">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="account.jpg" alt="leftImage" class="leftImage">
-    </div>
-
-    <div class="container">
-      <input type="hidden" name="userId" value="<%=session.getAttribute("userId").toString()%>"/>
-      <input type="hidden" name="userRole" value="<%=session.getAttribute("userRole").toString()%>"/>
-
-      <label><b>Email</b></label>
-      <input type="text" name="email" required value="<%=session.getAttribute("email").toString()%>"/>
-      
-      <label><b>First Name</b></label>
-      <input type="text" name="firstName" required value="<%=session.getAttribute("firstName").toString()%>"/>
-      
-      <label><b>Middle Name</b></label>
-      <input type="text" name="middleName" required value="<%=session.getAttribute("middleName").toString()%>"/>
-      
-      <label><b>Last Name</b></label>
-      <input type="text" name="lastName" required value="<%=session.getAttribute("lastName").toString()%>"/>
-      
-	  <label><b>Password</b></label>
-      <input type="password" name="password" required value="<%=session.getAttribute("password").toString()%>"/>
-      
-      <input type="hidden" name="dateCreated" required disabled="disabled"/>
-      <input type="hidden" name="dateUpdated" required disabled="disabled"/>
-        
-      <button type="submit" onclick="setValues()">Update User Info</button>
-      <button type="button" onclick="document.getElementById('id03').style.display='none'" class="cancelbtn">Cancel</button>
-      
-      <input type="hidden" name="dateCreated" id="dateC"/>
-	  <input type="hidden" name="dateUpdated" id="dateU"/>
-    </div>
-  </form>
-</div>
-
 <div class="header">
   <h1>Organissembly</h1>
   <p>An <b>student hub</b> for the growling tigers.</p>
-  <a href="${pageContext.request.contextPath}/home">
+  <!--  --><a href="index.jsp">
   <img src="Logo_of_the_UST_Growling_Tigers.svg" alt="Avatar" class="avatar">
-  </a>
-  <div align="right">
-    <%
-    String fullName = session.getAttribute("fullName").toString();
-    String userRole = session.getAttribute("userRole").toString();
-    String points = session.getAttribute("points").toString();
-    try {
-    	String accountUpdateStatus = session.getAttribute("accountUpdateStatus").toString();
-    	if (accountUpdateStatus!=null) {
-    		out.println("<b>Account Status Update Failed</b>");
-    	}
-    } catch (Exception e) {}
-    if (fullName!=null) {
-    	out.println("<b>Welcome! "+fullName+" - "+userRole+"</b>");
-    	out.println("<br><b>User Points: "+points+"</b>");
-    }
-    %>
-  </div>
+  <!--  --></a>
+  
 </div>
 
 <div class="topnav" id="myTopnav">
-  <a href="${pageContext.request.contextPath}/home" class="active">Home</a>
-  <a href="${pageContext.request.contextPath}/users">Users</a>
-  <a href="#" class="right" onclick="document.getElementById('id02').style.display='block'">Logout</a>
-  <a href="#" class="right" onclick="document.getElementById('id03').style.display='block'">Account Settings</a>
+  <a href="#home" class="active">Home</a>
+ <a href="${pageContext.request.contextPath}/org">Organizations</a>
+  <a href="#" class="right" onclick="document.getElementById('id01').style.display='block'">Login</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
-    </a>
+  </a>
 </div>
 
-<div class="row">
-  <div class="main">
-    <h2>ONLINE CLASSES</h2>
-    <h5>Classes resume in the form of web meetings and seminars, Oct. 10, 2020</h5>
-    <div class="fakeimg" style="height:200px;">Image</div>
-    <p>learning continues...</p>
-    <p>Most schools and universities have opted to continue learning in the form of Online Classes..</p>
-    <br>
-    <h2>GCQ CONTINUES FOR METRO MANILA</h2>
-    <h5>Trends are not looking good, Oct. 09, 2020</h5>
-    <div class="fakeimg" style="height:200px;">Image</div>
-    <p>COVID Pandemic still rages on...</p>
-    <p>Despite the measures taken by the Government and the people, Metro Manila is still under GCQ..</p>
-  </div>
-</div>
+<div align="left">
+ <b>Looks like something went wrong</b> 
 
-<div class="footer">
+           
+ </div>
+    
+    <div class="footer">
 	<p>Organissembly - Copyright 2020. University of Santo Tomas</p>
 </div>
      <script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
@@ -522,27 +399,15 @@ body {
 // Get the modal
 var modal = document.getElementById('id01');
 var modal2 = document.getElementById('id02');
-var modal3 = document.getElementById('id03');
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     } else if (event.target == modal2) {
     	modal2.style.display = "none";
-    } else if (event.target == modal3) {
-    	modal3.style.display = "none";
     } else {
     	//  Nothing to do
     }
-}
-
-function showPassword() {
-	var x = document.getElementById("password");
-	if (x.type === "password") {
-	    x.type = "text";
-	} else {
-	    x.type = "password";
-	}
 }
 function myFunction() {
 	  var x = document.getElementById("myTopnav");
@@ -552,10 +417,13 @@ function myFunction() {
 	    x.className = "topnav";
 	  }
 	}
-function setValues() {
-	alert("Action has been processed");
-	document.getElementById('dateC').value= Date();
-	document.getElementById('dateU').value= Date();
+function showPassword() {
+	var x = document.getElementById("password");
+	if (x.type === "password") {
+	    x.type = "text";
+	} else {
+	    x.type = "password";
+	}
 }
 </script>
 

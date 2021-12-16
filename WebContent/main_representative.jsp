@@ -319,6 +319,18 @@ body {
 <body>
 <!--<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>-->
 
+<%
+	response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");//HTTP1.1
+	
+	response.setHeader("Pragma", "no-cache");//HTTP1.0
+	
+	response.setHeader("Expires", "0");//Proxies
+
+	if(session.getAttribute("userId")==null){
+		response.sendRedirect("index.jsp");
+	}
+%>
+
 <div id="id02" class="modal">
   <form class="modal-content animate" action="${pageContext.request.contextPath}/logout" method="post">
     <div class="imgcontainer">
